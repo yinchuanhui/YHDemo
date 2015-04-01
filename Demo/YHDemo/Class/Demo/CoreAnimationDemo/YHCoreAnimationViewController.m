@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain)UIScrollView *scrollView;
 @property (nonatomic, retain)NSMutableArray *digitViewArray;
+@property (nonatomic, retain)CALayer *colorLayer;
 
 @end
 
@@ -43,6 +44,7 @@
     [self gradientLayerDemo];//CAGradientLayer
     [self replicatorLayer];//CAReplicatorLayer
     [self emitterLayer];//CAEmitterLayer
+    [self changeColorAnimate];//变换颜色的隐式动画
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,21 +64,21 @@
     UIImage *image = [UIImage imageNamed:@"Snowman"];
     contentsView.layer.contents = (__bridge id)image.CGImage;
     
-//    你可能已经注意到了我们的雪人看起来有点。。。胖 ＝＝！ 我们加载的图片并不刚好是一个方的，为了适应这个视图，它有一点点被拉伸了。在使用UIImageView的时候遇到过同样的问题，解决方法就是把contentMode属性设置成更合适的值，像这样：view.contentMode = UIViewContentModeScaleAspectFit;
-//    CALayer与contentMode对应的属性叫做contentsGravity
+    //    你可能已经注意到了我们的雪人看起来有点。。。胖 ＝＝！ 我们加载的图片并不刚好是一个方的，为了适应这个视图，它有一点点被拉伸了。在使用UIImageView的时候遇到过同样的问题，解决方法就是把contentMode属性设置成更合适的值，像这样：view.contentMode = UIViewContentModeScaleAspectFit;
+    //    CALayer与contentMode对应的属性叫做contentsGravity
     contentsView.layer.contentsGravity = kCAGravityLeft;
     
-//    contentsScale属性属于支持高分辨率（又称Hi-DPI或Retina）屏幕机制的一部分。它用来判断在绘制图层的时候应该为寄宿图创建的空间大小，和需要显示的图片的拉伸度（假设并没有设置contentsGravity属性）。UIView有一个类似功能但是非常少用到的contentScaleFactor属性。如果contentsScale设置为1.0，将会以每个点1个像素绘制图片，如果设置为2.0，则会以每个点2个像素绘制图片，这就是我们熟知的Retina屏幕
-//    contentsScale的目的并不是那么明显。它并不是总会对屏幕上的寄宿图有影响。如果你尝试对我们的例子设置不同的值，你就会发现根本没任何影响。因为contents由于设置了contentsGravity属性，所以它已经被拉伸以适应图层的边界。但是如果我们把contentsGravity设置为kCAGravityCenter（这个值并不会拉伸图片），那将会有很明显的变化
-//    如果你只是单纯地想放大图层的contents图片，你可以通过使用图层的transform和affineTransform属性来达到这个目的，这(指放大)也不是contengsScale的目的所在.
+    //    contentsScale属性属于支持高分辨率（又称Hi-DPI或Retina）屏幕机制的一部分。它用来判断在绘制图层的时候应该为寄宿图创建的空间大小，和需要显示的图片的拉伸度（假设并没有设置contentsGravity属性）。UIView有一个类似功能但是非常少用到的contentScaleFactor属性。如果contentsScale设置为1.0，将会以每个点1个像素绘制图片，如果设置为2.0，则会以每个点2个像素绘制图片，这就是我们熟知的Retina屏幕
+    //    contentsScale的目的并不是那么明显。它并不是总会对屏幕上的寄宿图有影响。如果你尝试对我们的例子设置不同的值，你就会发现根本没任何影响。因为contents由于设置了contentsGravity属性，所以它已经被拉伸以适应图层的边界。但是如果我们把contentsGravity设置为kCAGravityCenter（这个值并不会拉伸图片），那将会有很明显的变化
+    //    如果你只是单纯地想放大图层的contents图片，你可以通过使用图层的transform和affineTransform属性来达到这个目的，这(指放大)也不是contengsScale的目的所在.
     contentsView.layer.contentsScale = image.scale;
     
-//  contentsRect：单位坐标指定在0到1之间，是一个相对值。contentsRect是{0, 0, 1, 1}，这意味着整个寄宿图默认都是可见的，如果我们指定一个小一点的矩形，图片就会被裁剪
-//    contentsRect在app中最有趣的地方在于一个叫做image sprites（图片拼合）的用法。如果你有游戏编程的经验，那么你一定对图片拼合的概念很熟悉，图片能够在屏幕上独立地变更位置。抛开游戏编程不谈，这个技术常用来指代载入拼合的图片，跟移动图片一点关系也没有。
-//    典型地，图片拼合后可以打包整合到一张大图上一次性载入。相比多次载入不同的图片，这样做能够带来很多方面的好处：内存使用，载入时间，渲染性能等等
-//    拼合不仅给app提供了一个整洁的载入方式，还有效地提高了载入性能（单张大图比多张小图载入地更快），但是如果有手动安排的话，他们还是有一些不方便的，如果你需要在一个已经创建好的品和图上做一些尺寸上的修改或者其他变动，无疑是比较麻烦的。
-//    Mac上有一些商业软件可以为你自动拼合图片，这些工具自动生成一个包含拼合后的坐标的XML或者plist文件，拼合图片的使用大大简化。这个文件可以和图片一同载入，并给每个拼合的图层设置contentsRect，这样开发者就不用手动写代码来摆放位置了。
-//    这些文件通常在OpenGL游戏中使用，不过呢，你要是有兴趣在一些常见的app中使用拼合技术，那么一个叫做LayerSprites的开源库（https://github.com/nicklockwood/LayerSprites)，它能够读取Cocos2D格式中的拼合图并在普通的Core Animation层中显示出来。
+    //  contentsRect：单位坐标指定在0到1之间，是一个相对值。contentsRect是{0, 0, 1, 1}，这意味着整个寄宿图默认都是可见的，如果我们指定一个小一点的矩形，图片就会被裁剪
+    //    contentsRect在app中最有趣的地方在于一个叫做image sprites（图片拼合）的用法。如果你有游戏编程的经验，那么你一定对图片拼合的概念很熟悉，图片能够在屏幕上独立地变更位置。抛开游戏编程不谈，这个技术常用来指代载入拼合的图片，跟移动图片一点关系也没有。
+    //    典型地，图片拼合后可以打包整合到一张大图上一次性载入。相比多次载入不同的图片，这样做能够带来很多方面的好处：内存使用，载入时间，渲染性能等等
+    //    拼合不仅给app提供了一个整洁的载入方式，还有效地提高了载入性能（单张大图比多张小图载入地更快），但是如果有手动安排的话，他们还是有一些不方便的，如果你需要在一个已经创建好的品和图上做一些尺寸上的修改或者其他变动，无疑是比较麻烦的。
+    //    Mac上有一些商业软件可以为你自动拼合图片，这些工具自动生成一个包含拼合后的坐标的XML或者plist文件，拼合图片的使用大大简化。这个文件可以和图片一同载入，并给每个拼合的图层设置contentsRect，这样开发者就不用手动写代码来摆放位置了。
+    //    这些文件通常在OpenGL游戏中使用，不过呢，你要是有兴趣在一些常见的app中使用拼合技术，那么一个叫做LayerSprites的开源库（https://github.com/nicklockwood/LayerSprites)，它能够读取Cocos2D格式中的拼合图并在普通的Core Animation层中显示出来。
     contentsView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
     
 }
@@ -84,13 +86,13 @@
 - (void)layerDelegate{
     [self addDemoName:@"CALayer Delegate"];
     
-//    注意一下一些有趣的事情：
-//    
-//    1.我们在blueLayer上显式地调用了-display。不同于UIView，当图层显示在屏幕上时，CALayer不会自动重绘它的内容。它把重绘的决定权交给了开发者。
-//    2.尽管我们没有用masksToBounds属性，绘制的那个圆仍然沿边界被裁剪了。这是因为当你使用CALayerDelegate绘制寄宿图的时候，并没有对超出边界外的内容提供绘制支持。
-//    3.现在你理解了CALayerDelegate，并知道怎么使用它。但是除非你创建了一个单独的图层，你几乎没有机会用到CALayerDelegate协议。因为当UIView创建了它的宿主图层时，它就会自动地把图层的delegate设置为它自己，并提供了一个-displayLayer:的实现，那所有的问题就都没了。
-//    
-//    当使用寄宿了视图的图层的时候，你也不必实现-displayLayer:和-drawLayer:inContext:方法咦绘制你的寄宿图。通常做法是实现UIView的-drawRect:方法，UIView就会帮你做完剩下的工作，包括在需要重绘的时候调用-display方法。
+    //    注意一下一些有趣的事情：
+    //
+    //    1.我们在blueLayer上显式地调用了-display。不同于UIView，当图层显示在屏幕上时，CALayer不会自动重绘它的内容。它把重绘的决定权交给了开发者。
+    //    2.尽管我们没有用masksToBounds属性，绘制的那个圆仍然沿边界被裁剪了。这是因为当你使用CALayerDelegate绘制寄宿图的时候，并没有对超出边界外的内容提供绘制支持。
+    //    3.现在你理解了CALayerDelegate，并知道怎么使用它。但是除非你创建了一个单独的图层，你几乎没有机会用到CALayerDelegate协议。因为当UIView创建了它的宿主图层时，它就会自动地把图层的delegate设置为它自己，并提供了一个-displayLayer:的实现，那所有的问题就都没了。
+    //
+    //    当使用寄宿了视图的图层的时候，你也不必实现-displayLayer:和-drawLayer:inContext:方法咦绘制你的寄宿图。通常做法是实现UIView的-drawRect:方法，UIView就会帮你做完剩下的工作，包括在需要重绘的时候调用-display方法。
     
     CALayer *blueLayer = [CALayer layer];
     blueLayer.frame = CGRectMake(50.0f, [self getLastViewBottom]+20, 100.0f, 100.0f);
@@ -111,7 +113,7 @@
     b.backgroundColor = [UIColor blackColor];
     [self.scrollView addSubview:b];
     b.layer.anchorPoint = CGPointMake(0, 0);
-//    当改变了anchorPoint，position属性保持固定的值并没有发生改变，但是frame却移动了。
+    //    当改变了anchorPoint，position属性保持固定的值并没有发生改变，但是frame却移动了。
     NSLog(@"%@----%@", NSStringFromCGPoint(a.layer.position), NSStringFromCGPoint(b.layer.position));
 }
 
@@ -124,7 +126,7 @@
     a.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
     a.layer.shadowRadius = 20.0f;
     //masksToBounds会裁剪掉了阴影和超出边界的内容
-//    a.layer.masksToBounds = YES;
+    //    a.layer.masksToBounds = YES;
     [self.scrollView addSubview:a];
     
     UIView *b = [[UIView alloc] initWithFrame:CGRectMake(75, 25, 50, 50)];
@@ -277,7 +279,7 @@
     UIImageView *imageView1 = [self addImageViewWithName:@"Snowman" containerView:view];
     UIImageView *imageView2 = [self addImageViewWithName:@"Snowman" containerView:view];
     UIImageView *imageView3 = [self addImageViewWithName:@"Snowman" containerView:view];
-//    imageView2.frame = CGRectMake(kYH_ScreenWidth-imageView1.frame.size.width-imageView1.frame.origin.x, imageView1.frame.origin.y, imageView2.frame.size.width, imageView2.frame.size.height);
+    //    imageView2.frame = CGRectMake(kYH_ScreenWidth-imageView1.frame.size.width-imageView1.frame.origin.x, imageView1.frame.origin.y, imageView2.frame.size.width, imageView2.frame.size.height);
     imageView2.frame = CGRectMake(imageView1.frame.size.width+imageView1.frame.origin.x+20, imageView1.frame.origin.y, imageView2.frame.size.width, imageView2.frame.size.height);
     imageView3.frame = CGRectMake(imageView2.frame.size.width+imageView2.frame.origin.x+20, imageView1.frame.origin.y, imageView3.frame.size.width, imageView3.frame.size.height);
     
@@ -389,8 +391,8 @@
     textLayer.contentsScale = [UIScreen mainScreen].scale;
     
     UIFont *font = kYH_Font_Normal(14);
-//    CFStringRef fontName = (__bridge CFStringRef)font.fontName;
-//    CGFontRef fontRef = CGFontCreateWithFontName(fontName);
+    //    CFStringRef fontName = (__bridge CFStringRef)font.fontName;
+    //    CGFontRef fontRef = CGFontCreateWithFontName(fontName);
     CGFontRef fontRef = (__bridge CGFontRef)font;
     textLayer.font = fontRef;
     textLayer.fontSize = font.pointSize;
@@ -415,8 +417,8 @@
 - (void)replicatorLayer{
     [self addDemoName:@"CAReplicatorLayer 说明参见代码"];
     
-//    我们在屏幕的中间创建了一个灰色方块图层，然后用CAReplicatorLayer生成十个图层组成一个圆圈。instanceCount属性指定了图层需要重复多少次。instanceTransform指定了一个CATransform3D3D变换（这种情况下，下一图层的位移和旋转将会移动到圆圈的下一个点）。
-//    变换是逐步增加的，每个实例都是相对于前一实例布局。这就是为什么这些复制体最终不会出现在同意位置上
+    //    我们在屏幕的中间创建了一个灰色方块图层，然后用CAReplicatorLayer生成十个图层组成一个圆圈。instanceCount属性指定了图层需要重复多少次。instanceTransform指定了一个CATransform3D3D变换（这种情况下，下一图层的位移和旋转将会移动到圆圈的下一个点）。
+    //    变换是逐步增加的，每个实例都是相对于前一实例布局。这就是为什么这些复制体最终不会出现在同意位置上
     
     CAReplicatorLayer *replicatorLayer = [CAReplicatorLayer layer];
     replicatorLayer.backgroundColor = [UIColor grayColor].CGColor;
@@ -425,9 +427,9 @@
     replicatorLayer.instanceCount = 8;
     
     CATransform3D transform = CATransform3DIdentity;
-//    transform = CATransform3DTranslate(transform, 100, 0, 0);
+    //    transform = CATransform3DTranslate(transform, 100, 0, 0);
     transform = CATransform3DRotate(transform, M_PI_4, 0, 0, 1);
-//    transform = CATransform3DTranslate(transform, 0, -200, 0);
+    //    transform = CATransform3DTranslate(transform, 0, -200, 0);
     replicatorLayer.instanceTransform = transform;
     
     //通过逐步减少蓝色和绿色通道
@@ -472,6 +474,21 @@
     cell.emissionRange = M_PI * 2.0;
     //add particle template to emitter
     emitter.emitterCells = @[cell];
+}
+
+- (void)changeColorAnimate{
+    [self addDemoName:@"隐式动画"];
+    self.colorLayer = [CALayer layer];
+    self.colorLayer.frame = CGRectMake(20, [self getLastViewBottom]+20, 100, 100);
+    self.colorLayer.backgroundColor = [UIColor redColor].CGColor;
+    [self.scrollView.layer addSublayer:self.colorLayer];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(160, self.colorLayer.frame.origin.y, 100, 40)];
+    [button setTitle:@"变换颜色" forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor grayColor];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(changeColor) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollView addSubview:button];
 }
 
 #pragma mark - Layer Delegate
@@ -558,6 +575,22 @@
     [contrainerView addSubview:view];
     view.center = CGPointMake(contrainerView.frame.size.width / 2.0, contrainerView.frame.size.height / 2.0);
     return view;
+}
+
+- (void)changeColor{
+    CGFloat red = arc4random() / (CGFloat)INT_MAX;
+    CGFloat green = arc4random() / (CGFloat)INT_MAX;
+    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
+    self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
+    
+    //    用事务控制动画时间
+    //    [CATransaction begin];
+    //    [CATransaction setAnimationDuration:1.0];
+    //    CGFloat red = arc4random() / (CGFloat)INT_MAX;
+    //    CGFloat green = arc4random() / (CGFloat)INT_MAX;
+    //    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
+    //    self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
+    //    [CATransaction commit];
 }
 
 @end

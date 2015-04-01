@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E432B455-3FA9-4B9C-8FD1-84A5640EC275</string>
+	<key>IDESourceControlProjectName</key>
+	<string>YHDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EED7C42C8C395EC6C9BDEEE3DAC4A9AFAB910F7C</key>
+		<string>https://github.com/yinchuanhui/YHDemo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Demo/YHDemo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EED7C42C8C395EC6C9BDEEE3DAC4A9AFAB910F7C</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/yinchuanhui/YHDemo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EED7C42C8C395EC6C9BDEEE3DAC4A9AFAB910F7C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EED7C42C8C395EC6C9BDEEE3DAC4A9AFAB910F7C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>YHDemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>
