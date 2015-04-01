@@ -481,6 +481,12 @@
     self.colorLayer = [CALayer layer];
     self.colorLayer.frame = CGRectMake(20, [self getLastViewBottom]+20, 100, 100);
     self.colorLayer.backgroundColor = [UIColor redColor].CGColor;
+    
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionPush;
+    transition.subtype = kCATransitionFromLeft;
+    self.colorLayer.actions = @{@"backgroundColor": transition};
+    
     [self.scrollView.layer addSublayer:self.colorLayer];
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(160, self.colorLayer.frame.origin.y, 100, 40)];
@@ -578,19 +584,26 @@
 }
 
 - (void)changeColor{
+//    隐式动画
+//    CGFloat red = arc4random() / (CGFloat)INT_MAX;
+//    CGFloat green = arc4random() / (CGFloat)INT_MAX;
+//    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
+//    self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
+    
+    //    用事务控制动画时间
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:1.0];
+    [CATransaction setCompletionBlock:^{
+        //rotate the layer 90 degrees
+        CGAffineTransform transform = self.colorLayer.affineTransform;
+        transform = CGAffineTransformRotate(transform, M_PI_2);
+        self.colorLayer.affineTransform = transform;
+    }];
     CGFloat red = arc4random() / (CGFloat)INT_MAX;
     CGFloat green = arc4random() / (CGFloat)INT_MAX;
     CGFloat blue = arc4random() / (CGFloat)INT_MAX;
     self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
-    
-    //    用事务控制动画时间
-    //    [CATransaction begin];
-    //    [CATransaction setAnimationDuration:1.0];
-    //    CGFloat red = arc4random() / (CGFloat)INT_MAX;
-    //    CGFloat green = arc4random() / (CGFloat)INT_MAX;
-    //    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
-    //    self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
-    //    [CATransaction commit];
+    [CATransaction commit];
 }
 
 @end
