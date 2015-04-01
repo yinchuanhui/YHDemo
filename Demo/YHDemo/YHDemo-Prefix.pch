@@ -1,0 +1,24 @@
+//
+//  YHDemo-Prefix.pch
+//  YHDemo
+//
+//  Created by ych on 14-10-15.
+//  Copyright (c) 2014年 YH. All rights reserved.
+//
+
+#ifndef YHDemo_YHDemo_Prefix_pch
+#define YHDemo_YHDemo_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+#import "YHSystemUtil.h"
+#import "YHAppUtil.h"
+#import "YHConfig.h"
+#import "YHReadMeViewController.h"
+
+#import "YHPanTransitionViewController.h"
+#endif

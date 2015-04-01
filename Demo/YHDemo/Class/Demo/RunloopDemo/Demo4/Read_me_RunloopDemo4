@@ -1,0 +1,8 @@
+    此demo是Cocoa配置基于端口的输入源
+
+    由于NSPortMessage是私有类，demo并未走通
+
+    由于调用NSPortMessage下的方法在arc下编译不过，所以采用非arc
+
+
+    还可通过Core Foundation配置基于端口的源，详见http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html

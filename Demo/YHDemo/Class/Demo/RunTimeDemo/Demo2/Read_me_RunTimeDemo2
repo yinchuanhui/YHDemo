@@ -1,0 +1,47 @@
+程序分析：
+
+1）在给程序添加消息转发功能以前，必须覆盖两个方法，即methodSignatureForSelector:和forwardInvocation:。methodSignatureForSelector:的作用在于为另一个类实现的消息创建一个有效的方法签名。forwardInvocation:将选择器转发给一个真正实现了该消息的对象。
+
+
+
+2）Objective-C中的方法默认被隐藏了两个参数：self和_cmd。self指向对象本身，_cmd指向方法本身。举两个例子来说明：
+
+例一：- (NSString *)name
+
+这个方法实际上有两个参数：self和_cmd。
+
+例二：- (void)setValue:(int)val
+
+这个方法实际上有三个参数：self, _cmd和val。
+
+被指定为动态实现的方法的参数类型有如下的要求：
+
+A.第一个参数类型必须是id（就是self的类型）
+
+B.第二个参数类型必须是SEL（就是_cmd的类型）
+
+C.从第三个参数起，可以按照原方法的参数类型定义。举两个例子来说明：
+
+例一：setHeight:(CGFloat)height中的参数height是浮点型的，所以第三个参数类型就是f。
+
+例二：再比如setName:(NSString *)name中的参数name是字符串类型的，所以第三个参数类型就是@
+
+
+
+3）在main.m中有一句代码是book.name = @"c++ primer";程序运行到这里时，会去Book.m中寻找setName:这个赋值方法。但是Book.m里并没有这个方法，于是程序进入methodSignatureForSelector:中进行消息转发。执行完之后，以"v@:@"作为方法签名类型返回。
+
+这里v@:@是什么东西呢？实际上，这里的第一个字符v代表函数的返回类型是void，后面三个字符参考上面2）中的解释就可以知道，分别是self, _cmd, name这三个参数的类型id, SEL, NSString。
+
+接着程序进入forwardInvocation方法。得到的key为方法名称setName:，然后利用[invocationgetArgument:&obj atIndex:2];获取到参数值，这里是“c++ primer”。这里的index为什么要取2呢？如前面分析，第0个参数是self，第1个参数是_cmd，第2个参数才是方法后面带的那个参数。
+
+最后利用一个可变字典来赋值。这样就完成了整个setter过程。
+
+
+
+4）在main.m中有一句代码是 NSLog(@"%@", book.name);，程序运行到这里时，会去Book.m中寻找name这个取值方法 。但是Book.m里并没有这个取值方法，于是程序进入methodSignatureForSelector:中进行消息转发。执行完之后，以"@@:"作为方法签名类型返回。这里第一字符@代表函数返回类型NSString，第二个字符@代表self的类型id，第三个字符:代表_cmd的类型SEL。
+
+接着程序进入forwardInvocation方法。得到的key为方法名称name。最后根据这个key从字典里获取相应的值，这样就完成了整个getter过程。
+
+
+
+5）注意，调试代码的过程，我们发现只有name和author的赋值和取值进入methodSignatureForSelector:和forwardInvocation:这两个方法。还有一个属性version的赋值和取值，并没有进入methodSignatureForSelector:和forwardInvocation:这两个方法。这是因为，version属性被标识为@synthesize，编译器自动会加上setVersion和version两个方法，所以就不用消息转发了。

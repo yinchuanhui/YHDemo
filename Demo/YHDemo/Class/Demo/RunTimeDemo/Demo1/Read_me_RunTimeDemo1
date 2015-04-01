@@ -1,0 +1,41 @@
+demo显示了运行时编程的一些用法，如class_addMethod、class_copyPropertyList、class_getClassMethod、class_copyIvarList、
+resolveInstanceMethod、forwardingTargetForSelector
+
+消息转发机制
+
+1.快速转发：- (id)forwardingTargetForSelector:(SEL)aSelector
+2.标准转发：- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+           - (void)forwardInvocation:(NSInvocation *)anInvocation
+标准转发参见demo2
+
+两种消息转发方式的比较
+
+快速消息转发：简单、快速、但仅能转发给一个对象。
+标准消息转发：稍复杂、较慢、但转发操作实现可控，可以实现多对象转发。
+
+
+
+
+
+以下显示了运行时编程的一些方法
+
+1.   增加
+
+增加函数:class_addMethod
+增加实例变量:class_addIvar
+增加属性:@dynamic标签，或者class_addMethod，因为属性其实就是由getter和setter函数组成
+增加Protocol:class_addProtocol (说实话我真不知道动态增加一个protocol有什么用,-_-!!)
+
+2。  获取
+
+获取函数列表及每个函数的信息(函数指针、函数名等等):class_getClassMethod method_getName ...
+获取属性列表及每个属性的信息:class_copyPropertyList property_getName
+获取类本身的信息,如类名等：class_getName class_getInstanceSize
+获取变量列表及变量信息：class_copyIvarList
+获取变量的值
+
+3.    替换
+
+将实例替换成另一个类：object_setClass
+将函数替换成一个函数实现：class_replaceMethod
+直接通过char *格式的名称来修改变量的值，而不是通过变量

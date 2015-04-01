@@ -1,0 +1,35 @@
+个人理解：
+
+    子线程相当与经理，runloop相当于助理。
+
+    经理平时在睡觉，助理来处理访客(performSelecter)、电话(Mach port)、下属汇报（自定义源）、需定时处理的事件(NSTimer)。
+
+    经理可以规定助理只处理某种事件，相当于设定runloop运行模式。当助理收到需要处理的事件则唤醒经理，经理处理完后继续睡觉。
+
+    经理还可以规定助理的工作时间:
+    1.持续工作，不能停止（[[NSRunLoop currentRunLoop] run]）
+    2.工作一段时间停止休息（休息时间可以忽略不计），看一下是否达到下班条件（线程退出）
+
+
+主要理解runMode:beforeDate:的使用
+
+
+
+在本测试中，待程序运行后，做如下操作对比：
+
+1、点击buttonNormalThreadTestPressed，然后立刻点击buttonTestPressed，查看日志输出。
+
+2、待1完成后，点击buttonRunloopPressed，然后立刻点击buttonTestPressed，查看日志输出，跟1的日志做对比，即可以发现步骤2即使线程没有完成，在runloop等待过程中，界面仍然能够响应。
+
+
+
+while(done)
+{
+    [ NSRunLoop currentRunLoop]  runMode:currentMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
+}
+
+上面这段话看似程序进入了死循环，其实并不是这样。
+
+这段程序的意思是：
+
+如果当前线程有当前设置的runMode下的事件发生，runloop就会启动，处理对应的事件。如果没有事件发生，runloop就会每过10秒钟启动一次当前线程的runloop。

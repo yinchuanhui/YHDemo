@@ -1,0 +1,9 @@
+    本项目为学习过程中的演示demo。
+
+    View、ViewController、Util等文件夹中的代码都是实际项目中可以复用的。
+
+    Demo文件夹是View、ViewController、Util代码的使用样例，或者是runtime、runloop、thread等无UI效果的功能的使用样例。
+
+    增加demo时需要修改AppDelegate.m中getTransitionVC方法的demoDic。
+
+    每一个demo下都有一个read me文件，用于存放demo详解。
