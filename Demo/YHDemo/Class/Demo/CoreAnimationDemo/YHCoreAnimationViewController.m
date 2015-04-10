@@ -16,6 +16,11 @@
 @property (nonatomic, retain)UIScrollView *scrollView;
 @property (nonatomic, retain)NSMutableArray *digitViewArray;
 @property (nonatomic, retain)CALayer *colorLayer;
+@property (nonatomic, retain)UIImageView *transitionImageView;
+@property (nonatomic, retain)UIImageView *transitionImageView1;
+@property (nonatomic, retain)CALayer *controlLayer;
+@property (nonatomic, retain)UIView *animatinContrainerView;
+@property (nonatomic, retain)UIView *ballView;
 
 @end
 
@@ -45,6 +50,12 @@
     [self replicatorLayer];//CAReplicatorLayer
     [self emitterLayer];//CAEmitterLayer
     [self changeColorAnimate];//变换颜色的隐式动画
+    [self keyFrameAnimate];//关键帧动画
+    [self transitionAnimation];//过度动画，属性动画不起作用时用到，比如变换imageview的图片
+    [self layerTreeAnimation];//图层树动画
+    [self animationTimeControl];//通过CAMediaTiming控制动画
+    [self mediaTimingFunctionBezierPath];//展示了系统定义的CAMediaTimingFunction类型的贝赛尔曲线
+    [self fallDemo];//一个橡胶球掉落到坚硬的地面的场景,没法用三次贝塞尔曲线描述的反弹的动画
 }
 
 - (void)didReceiveMemoryWarning {
@@ -482,10 +493,10 @@
     self.colorLayer.frame = CGRectMake(20, [self getLastViewBottom]+20, 100, 100);
     self.colorLayer.backgroundColor = [UIColor redColor].CGColor;
     
-    CATransition *transition = [CATransition animation];
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromLeft;
-    self.colorLayer.actions = @{@"backgroundColor": transition};
+//    CATransition *transition = [CATransition animation];
+//    transition.type = kCATransitionPush;
+//    transition.subtype = kCATransitionFromLeft;
+//    self.colorLayer.actions = @{@"backgroundColor": transition};
     
     [self.scrollView.layer addSublayer:self.colorLayer];
     
@@ -495,6 +506,147 @@
     [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(changeColor) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:button];
+}
+
+- (void)keyFrameAnimate{
+    UILabel *label = [self addDemoName:@"关键帧动画"];
+    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y+50, label.frame.size.width, label.frame.size.height);
+    
+    CGFloat y = [self getLastViewBottom]+20;
+    
+    UIBezierPath *bezierPath = [[UIBezierPath alloc] init];
+    [bezierPath moveToPoint:CGPointMake(20, y+150)];
+    [bezierPath addCurveToPoint:CGPointMake(320, y+150) controlPoint1:CGPointMake(75, y) controlPoint2:CGPointMake(225, y+300)];
+    
+    CAShapeLayer *pathLayer = [CAShapeLayer layer];
+    pathLayer.path = bezierPath.CGPath;
+    pathLayer.fillColor = [UIColor clearColor].CGColor;
+    pathLayer.strokeColor = [UIColor blueColor].CGColor;
+    pathLayer.lineWidth = 2;
+    [self.scrollView.layer addSublayer:pathLayer];
+    
+    UIImageView *car = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+    car.image = [UIImage imageNamed:@"car"];
+    car.layer.position = CGPointMake(0, 150+y);
+    [self.scrollView addSubview:car];
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+    animation.keyPath = @"position";
+    animation.duration = 5.0;
+    animation.path = bezierPath.CGPath;
+    animation.repeatCount = NSNotFound;
+    animation.rotationMode = kCAAnimationRotateAuto;
+    
+    CABasicAnimation *animation2 = [CABasicAnimation animation];
+    animation2.keyPath = @"opacity";
+    animation2.toValue = [NSNumber numberWithFloat:0.5];;
+    animation2.repeatCount = NSNotFound;
+    
+    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+    animationGroup.animations = @[animation, animation2];
+    animationGroup.duration = 5.0;
+    animationGroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    animationGroup.repeatCount = NSNotFound;
+    
+    [car.layer addAnimation:animationGroup forKey:nil];
+}
+
+- (void)transitionAnimation{
+    [self addDemoName:@"过度-变换imageview的图片"];
+    self.transitionImageView = [self addImageViewWithName:@"Snowman" containerView:self.scrollView];
+    self.transitionImageView1 = [self addImageViewWithName:@"Snowman" containerView:self.scrollView];
+    self.transitionImageView1.frame = CGRectMake(self.transitionImageView1.frame.origin.x+200, self.transitionImageView.frame.origin.y, self.transitionImageView1.frame.size.width, self.transitionImageView1.frame.size.height);
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(460, self.transitionImageView.frame.origin.y, 100, 40)];
+    [button setTitle:@"变换图片" forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor grayColor];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(changeImage) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollView addSubview:button];
+}
+
+- (void)layerTreeAnimation{
+    UILabel *label = [self addDemoName:@"图层树动画"];
+    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y+100, label.frame.size.width, label.frame.size.height);
+    UIImageView *imageView = [self addImageViewWithName:@"layer_tree_animation_demo" containerView:self.scrollView];
+    imageView.frame = CGRectMake(imageView.frame.origin.x, label.frame.origin.y+40, imageView.frame.size.width, imageView.frame.size.height);
+}
+
+- (void)animationTimeControl{
+    [self addDemoName:@"动画控制-在灰色区域左右滑动"];
+    
+    self.animatinContrainerView = [[UIView alloc] initWithFrame:CGRectMake(0, [self getLastViewBottom]+20, kYH_ScreenWidth, 300)];
+    self.animatinContrainerView.backgroundColor = [UIColor grayColor];
+    [self.scrollView addSubview:self.animatinContrainerView];
+    
+    self.controlLayer = [CALayer layer];
+    self.controlLayer.frame = CGRectMake(20, 50, 128, 200);
+    self.controlLayer.anchorPoint = CGPointMake(0, 0.5);
+    self.controlLayer.contents = (__bridge id)[UIImage imageNamed:@"Snowman"].CGImage;
+    [self.animatinContrainerView.layer addSublayer:self.controlLayer];
+    
+    CATransform3D perspective = CATransform3DIdentity;
+    perspective.m34 = -1.0/500.0;
+    self.animatinContrainerView.layer.sublayerTransform = perspective;
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] init];
+    [pan addTarget:self action:@selector(pan:)];
+    [self.animatinContrainerView addGestureRecognizer:pan];
+    
+    //起到暂停动画的功能
+    self.controlLayer.speed = 0.0;
+    
+    CABasicAnimation *animation = [CABasicAnimation animation];
+    animation.keyPath = @"transform.rotation.y";
+    animation.toValue = @(-M_PI_2);
+    animation.duration = 1.0;
+    [self.controlLayer addAnimation:animation forKey:nil];
+}
+
+- (void)mediaTimingFunctionBezierPath{
+    [self addDemoName:@"自定义贝塞尔曲线"];
+    [self addImageViewWithName:@"media_timing_bezier_demo_1" containerView:self.scrollView];
+    [self addImageViewWithName:@"media_timing_bezier_demo_2" containerView:self.scrollView];
+    
+    CAMediaTimingFunction *function = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    CGPoint controlPoint1, controlPoint2;
+    [function getControlPointAtIndex:1 values:(float *)&controlPoint1];
+    [function getControlPointAtIndex:2 values:(float *)&controlPoint2];
+    NSLog(@"===%@==%@", NSStringFromCGPoint(controlPoint1), NSStringFromCGPoint(controlPoint2));
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+    [path moveToPoint:CGPointZero];
+    [path addCurveToPoint:CGPointMake(1, 1) controlPoint1:controlPoint1 controlPoint2:controlPoint2];
+    [path applyTransform:CGAffineTransformMakeScale(100, 100)];
+    
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    layer.strokeColor = [UIColor redColor].CGColor;
+    layer.fillColor = [UIColor clearColor].CGColor;
+    layer.lineWidth = 3;
+    layer.path = path.CGPath;
+    layer.frame = CGRectMake(20, [self getLastViewBottom]+20, kYH_ScreenWidth, 100);
+    [self.scrollView.layer addSublayer:layer];
+    
+    UILabel *label = [self addDemoName:@"获取系统定义CAMediaTimingFunction类型的控制点都是一样的，系统禁止？"];
+    label.frame = CGRectMake(150, layer.frame.origin.y, label.frame.size.width, label.frame.size.height);
+}
+
+- (void)fallDemo{
+    UILabel *label = [self addDemoName:@"一个橡胶球掉落到坚硬的地面的场景"];
+    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y+100, label.frame.size.width, label.frame.size.height);
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, [self getLastViewBottom]+20, kYH_ScreenWidth, 300)];
+    containerView.backgroundColor = [UIColor grayColor];
+    [self.scrollView addSubview:containerView];
+    
+    self.ballView = [[UIView alloc] initWithFrame:CGRectMake(60, 0, 40, 40)];
+    self.ballView.layer.cornerRadius =20;
+    self.ballView.backgroundColor = [UIColor redColor];
+    [containerView addSubview:self.ballView];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 40)];
+    button.backgroundColor = [UIColor blackColor];
+    [button setTitle:@"自由落体" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(freeFall) forControlEvents:UIControlEventTouchUpInside];
+    [containerView addSubview:button];
 }
 
 #pragma mark - Layer Delegate
@@ -590,20 +742,168 @@
 //    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
 //    self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
     
-    //    用事务控制动画时间
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:1.0];
-    [CATransaction setCompletionBlock:^{
-        //rotate the layer 90 degrees
-        CGAffineTransform transform = self.colorLayer.affineTransform;
-        transform = CGAffineTransformRotate(transform, M_PI_2);
-        self.colorLayer.affineTransform = transform;
-    }];
+//    用事务控制动画时间
+//    [CATransaction begin];
+//    [CATransaction setAnimationDuration:1.0];
+//    [CATransaction setCompletionBlock:^{
+//        //rotate the layer 90 degrees
+//        CGAffineTransform transform = self.colorLayer.affineTransform;
+//        transform = CGAffineTransformRotate(transform, M_PI_2);
+//        self.colorLayer.affineTransform = transform;
+//    }];
+//    CGFloat red = arc4random() / (CGFloat)INT_MAX;
+//    CGFloat green = arc4random() / (CGFloat)INT_MAX;
+//    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
+//    self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
+//    [CATransaction commit];
+    
     CGFloat red = arc4random() / (CGFloat)INT_MAX;
     CGFloat green = arc4random() / (CGFloat)INT_MAX;
     CGFloat blue = arc4random() / (CGFloat)INT_MAX;
+    
     self.colorLayer.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
-    [CATransaction commit];
+
+    CABasicAnimation *animation = [CABasicAnimation animation];
+    animation.keyPath = @"backgroundColor";
+    animation.fromValue = (__bridge id)self.colorLayer.backgroundColor;
+    animation.toValue = (__bridge id)[UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
+    //apply animation to layer
+    [self.colorLayer addAnimation:animation forKey:nil];
+}
+
+- (void)changeImage{
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionFade;
+    self.transitionImageView.image = [UIImage imageNamed:@"car"];
+    [self.transitionImageView.layer addAnimation:transition forKey:nil];
+    
+    [UIView transitionWithView:self.transitionImageView1 duration:1.0
+                       options:UIViewAnimationOptionTransitionCurlUp
+                    animations:^{
+                        self.transitionImageView1.image = [UIImage imageNamed:@"car"];
+                    }
+                    completion:NULL];
+}
+
+- (void)pan:(UIPanGestureRecognizer *)pan{
+    CGFloat x = [pan translationInView:self.animatinContrainerView].x;
+    x /= 200;
+    CFTimeInterval timeOffset = self.controlLayer.timeOffset;
+    timeOffset = MIN(0.999, MAX(0.0, timeOffset-x));
+    self.controlLayer.timeOffset = timeOffset;
+    [pan setTranslation:CGPointZero inView:self.view];
+}
+
+- (void)freeFall{
+//    //reset ball to top of screen
+//    self.ballView.center = CGPointMake(150, 32);
+//    //create keyframe animation
+//    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+//    animation.keyPath = @"position";
+//    animation.duration = 1.0;
+//    animation.delegate = self;
+//    animation.values = @[
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 32)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 268)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 140)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 268)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 220)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 268)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 250)],
+//                         [NSValue valueWithCGPoint:CGPointMake(150, 268)]
+//                         ];
+//    animation.timingFunctions = @[
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseIn],
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseOut],
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseIn],
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseOut],
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseIn],
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseOut],
+//                                  [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseIn]
+//                                  ];
+//    animation.keyTimes = @[@0.0, @0.3, @0.5, @0.7, @0.8, @0.9, @0.95, @1.0];
+//    //apply animation
+//    self.ballView.layer.position = CGPointMake(150, 268);
+//    [self.ballView.layer addAnimation:animation forKey:nil];
+    /*
+    //reset ball to top of screen
+    self.ballView.center = CGPointMake(150, 32);
+    //set up animation parameters
+    NSValue *fromValue = [NSValue valueWithCGPoint:CGPointMake(150, 32)];
+    NSValue *toValue = [NSValue valueWithCGPoint:CGPointMake(150, 268)];
+    CFTimeInterval duration = 1.0;
+    //generate keyframes
+    NSInteger numFrames = duration * 60;
+    NSMutableArray *frames = [NSMutableArray array];
+    for (int i = 0; i < numFrames; i++) {
+        float time = 1 / (float)numFrames * i;
+        [frames addObject:[self interpolateFromValue:fromValue toValue:toValue time:time]];
+    }
+    //create keyframe animation
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+    animation.keyPath = @"position";
+    animation.duration = 1.0;
+    animation.delegate = self;
+    animation.values = frames;
+    //apply animation
+    [self.ballView.layer addAnimation:animation forKey:nil];*/
+    
+    //reset ball to top of screen
+    self.ballView.center = CGPointMake(150, 32);
+    //set up animation parameters
+    NSValue *fromValue = [NSValue valueWithCGPoint:CGPointMake(150, 32)];
+    NSValue *toValue = [NSValue valueWithCGPoint:CGPointMake(150, 268)];
+    CFTimeInterval duration = 1.0;
+    //generate keyframes
+    NSInteger numFrames = duration * 60;
+    NSMutableArray *frames = [NSMutableArray array];
+    for (int i = 0; i < numFrames; i++) {
+        float time = 1/(float)numFrames * i;
+        //apply easing
+        time = bounceEaseOut(time);
+        //add keyframe
+        [frames addObject:[self interpolateFromValue:fromValue toValue:toValue time:time]];
+    }
+    //create keyframe animation
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+    animation.keyPath = @"position";
+    animation.duration = 1.0;
+    animation.delegate = self;
+    animation.values = frames;;
+    //apply animation
+    [self.ballView.layer addAnimation:animation forKey:nil];
+}
+
+float interpolate(float from, float to, float time)
+{
+    return (to - from) * time + from;
+}
+- (id)interpolateFromValue:(id)fromValue toValue:(id)toValue time:(float)time
+{
+    if ([fromValue isKindOfClass:[NSValue class]]) {
+        //get type
+        const char *type = [fromValue objCType];
+        if (strcmp(type, @encode(CGPoint)) == 0) {
+            CGPoint from = [fromValue CGPointValue];
+            CGPoint to = [toValue CGPointValue];
+            CGPoint result = CGPointMake(interpolate(from.x, to.x, time), interpolate(from.y, to.y, time));
+            return [NSValue valueWithCGPoint:result];
+        }
+    }
+    //provide safe default implementation
+    return (time < 0.5)? fromValue: toValue;
+}
+
+float bounceEaseOut(float t)
+{
+    if (t < 4/11.0) {
+        return (121 * t * t)/16.0;
+    } else if (t < 8/11.0) {
+        return (363/40.0 * t * t) - (99/10.0 * t) + 17/5.0;
+    } else if (t < 9/10.0) {
+        return (4356/361.0 * t * t) - (35442/1805.0 * t) + 16061/1805.0;
+    }
+    return (54/5.0 * t * t) - (513/25.0 * t) + 268/25.0;
 }
 
 @end

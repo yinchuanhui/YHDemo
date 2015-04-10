@@ -23,6 +23,7 @@
     
     b = [[UIButton alloc] initWithFrame:CGRectMake(20, 100, 100, 50)];
     b.backgroundColor = [UIColor grayColor];
+    [b setTitle:@"Pop" forState:UIControlStateNormal];
     [b addTarget:self action:@selector(pushAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];
 }

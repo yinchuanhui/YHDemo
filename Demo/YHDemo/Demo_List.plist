@@ -4,24 +4,17 @@
 <dict>
 	<key>Category</key>
 	<array>
-		<string>GCD&amp;Block</string>
+		<string>GCD</string>
 		<string>RunLoop</string>
 		<string>RunTime</string>
 		<string>ProgressView</string>
 		<string>ChartView</string>
 		<string>CoreAnimation</string>
+		<string>性能调优</string>
+		<string>Block</string>
 	</array>
-	<key>GCD&amp;Block</key>
-	<array>
-		<dict>
-			<key>description</key>
-			<string>block的循环引用问题</string>
-			<key>main_vc</key>
-			<string>YHRecycleRetainViewController</string>
-			<key>read_me</key>
-			<string>Read_me_GCD_Recycle_Retain</string>
-		</dict>
-	</array>
+	<key>GCD</key>
+	<array/>
 	<key>RunLoop</key>
 	<array>
 		<dict>
@@ -107,6 +100,44 @@
 			<string>YHCoreAnimationViewController</string>
 			<key>read_me</key>
 			<string>Read_me_CoreAnimationDemo</string>
+		</dict>
+	</array>
+	<key>性能调优</key>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>Instrument</string>
+			<key>main_vc</key>
+			<string>YHPerformanceDemo1ViewController</string>
+			<key>read_me</key>
+			<string>Read_me_Instrument_Demo_1</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>调优技巧</string>
+			<key>main_vc</key>
+			<string>YHPerformanceDemo2ViewController</string>
+			<key>read_me</key>
+			<string>Read_me_Instrument_Demo_2</string>
+		</dict>
+	</array>
+	<key>Block</key>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>循环引用</string>
+			<key>main_vc</key>
+			<string>YHBlockDemo2ViewController</string>
+			<key>read_me</key>
+			<string>Read_me_Block_Demo_2</string>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>Block中变量内存</string>
+			<key>main_vc</key>
+			<string>YHBlockDemo1ViewController</string>
+			<key>read_me</key>
+			<string>Read_me_Block_Demo_1</string>
 		</dict>
 	</array>
 </dict>

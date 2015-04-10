@@ -1,25 +1,26 @@
 //
-//  YHRecycleRetainViewController.m
+//  YHBlockDemo2ViewController.m
 //  YHDemo
 //
-//  Created by ych on 15/1/14.
+//  Created by ych on 15/4/9.
 //  Copyright (c) 2015年 YH. All rights reserved.
 //
 
-#import "YHRecycleRetainViewController.h"
+#import "YHBlockDemo2ViewController.h"
 #import "YHPushViewController.h"
 
-@interface YHRecycleRetainViewController ()
+@interface YHBlockDemo2ViewController ()
 
 @end
 
-@implementation YHRecycleRetainViewController
+@implementation YHBlockDemo2ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(20, 100, 100, 50)];
     b.backgroundColor = [UIColor grayColor];
+    [b setTitle:@"Push" forState:UIControlStateNormal];
     [b addTarget:self action:@selector(pushAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:b];
 }
@@ -32,6 +33,7 @@
     YHPushViewController *pushVC = [[YHPushViewController alloc] init];
     [self.navigationController pushViewController:pushVC animated:YES];
 }
+
 
 /*
 #pragma mark - Navigation
