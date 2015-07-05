@@ -26,10 +26,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    int i = (8221831127+98159)%3288;
-    NSLog(@"----%d", i);
-    
     /*!
      三屏切换效果，如果要演示其他切换效果的demo可更改rootVC
      除上述demo外，其他demo统一在getTransitionVC方法中配置，左侧视图为demo选择区域，中间视图为demo显示区域，通过切换中间视图来显示不用demo

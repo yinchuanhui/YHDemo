@@ -19,35 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    __tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-//    __tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    __tableView.showsVerticalScrollIndicator = NO;
-//    [__tableView setDelegate:self];
-//    [__tableView setDataSource:self];
-//    [__tableView reloadData];
-//    [self.view addSubview:__tableView];
-    
-    UIView *a = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    a.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:a];
-    
-    UIView *b = [[UIView alloc] initWithFrame:CGRectMake(-20, -20, 100, 100)];
-    b.backgroundColor = [UIColor redColor];
-    [a addSubview:b];
-    
-    a.layer.shadowOpacity = 0.5;
-    a.layer.shadowColor = [UIColor blackColor].CGColor;
-    a.layer.shadowOffset = CGSizeMake(120, 130);
-//    a.layer.masksToBounds = YES;
-    
-    CGMutablePathRef squarePath = CGPathCreateMutable();
-    CGPathAddRect(squarePath, NULL, a.bounds);
-    a.layer.shadowPath = squarePath; CGPathRelease(squarePath);
-    
-//    CGMutablePathRef circlePath = CGPathCreateMutable();
-//    CGPathAddEllipseInRect(circlePath, NULL, a.bounds);
-//    a.layer.shadowPath = circlePath; CGPathRelease(circlePath);
-
+    __tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    __tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    __tableView.showsVerticalScrollIndicator = NO;
+    [__tableView setDelegate:self];
+    [__tableView setDataSource:self];
+    [__tableView reloadData];
+    [self.view addSubview:__tableView];
 }
 
 - (void)didReceiveMemoryWarning {

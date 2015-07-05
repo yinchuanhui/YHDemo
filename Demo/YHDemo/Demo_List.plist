@@ -14,7 +14,16 @@
 		<string>Block</string>
 	</array>
 	<key>GCD</key>
-	<array/>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>信号量</string>
+			<key>main_vc</key>
+			<string>YHSemaphoreViewController</string>
+			<key>read_me</key>
+			<string>Read_me_Gcd_Semaphore</string>
+		</dict>
+	</array>
 	<key>RunLoop</key>
 	<array>
 		<dict>

@@ -29,10 +29,11 @@
 		440E31331AC564B900BAF826 /* YHReflectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 440E31321AC564B900BAF826 /* YHReflectionView.m */; };
 		4420D5761AD6577F00F6C20D /* YHBlockDemo1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4420D5751AD6577F00F6C20D /* YHBlockDemo1ViewController.m */; };
 		4420D5791AD65A8300F6C20D /* Read_me_Block_Demo_1 in Resources */ = {isa = PBXBuildFile; fileRef = 4420D5771AD65A8300F6C20D /* Read_me_Block_Demo_1 */; };
-		4420D5821AD6607200F6C20D /* Read_me_Block_Demo_2 in Resources */ = {isa = PBXBuildFile; fileRef = 4420D5801AD6607200F6C20D /* Read_me_Block_Demo_2 */; };
-		4420D5861AD6608C00F6C20D /* YHBlockDemo2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4420D5851AD6608C00F6C20D /* YHBlockDemo2ViewController.m */; };
 		4420D58B1AD661C600F6C20D /* YHAAAA.m in Sources */ = {isa = PBXBuildFile; fileRef = 4420D5881AD661C600F6C20D /* YHAAAA.m */; };
 		4420D58C1AD661C600F6C20D /* YHPushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4420D58A1AD661C600F6C20D /* YHPushViewController.m */; };
+		44322FDC1AFCC59E00CD33CF /* YHSemaphoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44322FDB1AFCC59E00CD33CF /* YHSemaphoreViewController.m */; };
+		44322FDF1AFCC61200CD33CF /* YHConcurrentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 44322FDE1AFCC61200CD33CF /* YHConcurrentManager.m */; };
+		44322FE11AFCCB1F00CD33CF /* Read_me_Gcd_Semaphore in Resources */ = {isa = PBXBuildFile; fileRef = 44322FE01AFCCB1E00CD33CF /* Read_me_Gcd_Semaphore */; };
 		443358541A661AF0007B7128 /* Demo_List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 443358531A661AF0007B7128 /* Demo_List.plist */; };
 		443D5EE81AB292DC00445DDD /* Read_me_ChartViewDemo in Resources */ = {isa = PBXBuildFile; fileRef = 443D5EE61AB292DC00445DDD /* Read_me_ChartViewDemo */; };
 		443D5EEC1AB2930200445DDD /* YHChartDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443D5EEB1AB2930200445DDD /* YHChartDemoViewController.m */; };
@@ -68,6 +69,8 @@
 		44C97FC019F66FD5004C440B /* YHRunloopDemo3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C97FBF19F66FD5004C440B /* YHRunloopDemo3ViewController.m */; };
 		44C97FC319F66FF5004C440B /* Read_me_RunloopDemo3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C97FC119F66FF5004C440B /* Read_me_RunloopDemo3 */; };
 		44CCA9351AB178AA006E3B8E /* YHCircleProgressView_1.m in Sources */ = {isa = PBXBuildFile; fileRef = 44CCA9341AB178AA006E3B8E /* YHCircleProgressView_1.m */; };
+		44DA649C1ADCAEB3001C22BE /* YHBlockDemo2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44DA649B1ADCAEB3001C22BE /* YHBlockDemo2ViewController.m */; };
+		44DA649E1ADCAEE6001C22BE /* Read_me_Block_Demo_2 in Resources */ = {isa = PBXBuildFile; fileRef = 44DA649D1ADCAEE6001C22BE /* Read_me_Block_Demo_2 */; };
 		44E0EACA1AD37B0B007529B9 /* YHPerformanceDemo1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E0EAC91AD37B0B007529B9 /* YHPerformanceDemo1ViewController.m */; };
 		44E0EACD1AD37C29007529B9 /* Read_me_Instrument_Demo_1 in Resources */ = {isa = PBXBuildFile; fileRef = 44E0EACB1AD37C29007529B9 /* Read_me_Instrument_Demo_1 */; };
 /* End PBXBuildFile section */
@@ -122,13 +125,15 @@
 		4420D5741AD6577F00F6C20D /* YHBlockDemo1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHBlockDemo1ViewController.h; sourceTree = "<group>"; };
 		4420D5751AD6577F00F6C20D /* YHBlockDemo1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHBlockDemo1ViewController.m; sourceTree = "<group>"; };
 		4420D5771AD65A8300F6C20D /* Read_me_Block_Demo_1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Read_me_Block_Demo_1; sourceTree = "<group>"; };
-		4420D5801AD6607200F6C20D /* Read_me_Block_Demo_2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Read_me_Block_Demo_2; path = ../RecyleRetain/Read_me_Block_Demo_2; sourceTree = "<group>"; };
-		4420D5841AD6608C00F6C20D /* YHBlockDemo2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBlockDemo2ViewController.h; path = ../RecyleRetain/YHBlockDemo2ViewController.h; sourceTree = "<group>"; };
-		4420D5851AD6608C00F6C20D /* YHBlockDemo2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBlockDemo2ViewController.m; path = ../RecyleRetain/YHBlockDemo2ViewController.m; sourceTree = "<group>"; };
 		4420D5871AD661C600F6C20D /* YHAAAA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHAAAA.h; path = YHDemo/Class/Demo/Block/RecyleRetain/YHAAAA.h; sourceTree = SOURCE_ROOT; };
 		4420D5881AD661C600F6C20D /* YHAAAA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHAAAA.m; path = YHDemo/Class/Demo/Block/RecyleRetain/YHAAAA.m; sourceTree = SOURCE_ROOT; };
 		4420D5891AD661C600F6C20D /* YHPushViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHPushViewController.h; path = YHDemo/Class/Demo/Block/RecyleRetain/YHPushViewController.h; sourceTree = SOURCE_ROOT; };
 		4420D58A1AD661C600F6C20D /* YHPushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHPushViewController.m; path = YHDemo/Class/Demo/Block/RecyleRetain/YHPushViewController.m; sourceTree = SOURCE_ROOT; };
+		44322FDA1AFCC59E00CD33CF /* YHSemaphoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHSemaphoreViewController.h; sourceTree = "<group>"; };
+		44322FDB1AFCC59E00CD33CF /* YHSemaphoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHSemaphoreViewController.m; sourceTree = "<group>"; };
+		44322FDD1AFCC61200CD33CF /* YHConcurrentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHConcurrentManager.h; sourceTree = "<group>"; };
+		44322FDE1AFCC61200CD33CF /* YHConcurrentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHConcurrentManager.m; sourceTree = "<group>"; };
+		44322FE01AFCCB1E00CD33CF /* Read_me_Gcd_Semaphore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Read_me_Gcd_Semaphore; sourceTree = "<group>"; };
 		443358531A661AF0007B7128 /* Demo_List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Demo_List.plist; sourceTree = "<group>"; };
 		443D5EE61AB292DC00445DDD /* Read_me_ChartViewDemo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Read_me_ChartViewDemo; sourceTree = "<group>"; };
 		443D5EEA1AB2930200445DDD /* YHChartDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHChartDemoViewController.h; sourceTree = "<group>"; };
@@ -189,6 +194,9 @@
 		44C97FC119F66FF5004C440B /* Read_me_RunloopDemo3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Read_me_RunloopDemo3; sourceTree = "<group>"; };
 		44CCA9331AB178AA006E3B8E /* YHCircleProgressView_1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHCircleProgressView_1.h; sourceTree = "<group>"; };
 		44CCA9341AB178AA006E3B8E /* YHCircleProgressView_1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHCircleProgressView_1.m; sourceTree = "<group>"; };
+		44DA649A1ADCAEB3001C22BE /* YHBlockDemo2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YHBlockDemo2ViewController.h; path = YHDemo/Class/Demo/Block/RecyleRetain/YHBlockDemo2ViewController.h; sourceTree = SOURCE_ROOT; };
+		44DA649B1ADCAEB3001C22BE /* YHBlockDemo2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YHBlockDemo2ViewController.m; path = YHDemo/Class/Demo/Block/RecyleRetain/YHBlockDemo2ViewController.m; sourceTree = SOURCE_ROOT; };
+		44DA649D1ADCAEE6001C22BE /* Read_me_Block_Demo_2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Read_me_Block_Demo_2; path = YHDemo/Class/Demo/Block/RecyleRetain/Read_me_Block_Demo_2; sourceTree = SOURCE_ROOT; };
 		44E0EAC81AD37B0B007529B9 /* YHPerformanceDemo1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHPerformanceDemo1ViewController.h; sourceTree = "<group>"; };
 		44E0EAC91AD37B0B007529B9 /* YHPerformanceDemo1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHPerformanceDemo1ViewController.m; sourceTree = "<group>"; };
 		44E0EACB1AD37C29007529B9 /* Read_me_Instrument_Demo_1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Read_me_Instrument_Demo_1; sourceTree = "<group>"; };
@@ -439,17 +447,30 @@
 				4420D5881AD661C600F6C20D /* YHAAAA.m */,
 				4420D5891AD661C600F6C20D /* YHPushViewController.h */,
 				4420D58A1AD661C600F6C20D /* YHPushViewController.m */,
-				4420D5801AD6607200F6C20D /* Read_me_Block_Demo_2 */,
-				4420D5841AD6608C00F6C20D /* YHBlockDemo2ViewController.h */,
-				4420D5851AD6608C00F6C20D /* YHBlockDemo2ViewController.m */,
+				44DA649A1ADCAEB3001C22BE /* YHBlockDemo2ViewController.h */,
+				44DA649B1ADCAEB3001C22BE /* YHBlockDemo2ViewController.m */,
+				44DA649D1ADCAEE6001C22BE /* Read_me_Block_Demo_2 */,
 			);
 			name = RecyleRetain;
 			path = Demo2;
 			sourceTree = "<group>";
 		};
+		44322FD91AFCC57000CD33CF /* Semaphore */ = {
+			isa = PBXGroup;
+			children = (
+				44322FDA1AFCC59E00CD33CF /* YHSemaphoreViewController.h */,
+				44322FDB1AFCC59E00CD33CF /* YHSemaphoreViewController.m */,
+				44322FDD1AFCC61200CD33CF /* YHConcurrentManager.h */,
+				44322FDE1AFCC61200CD33CF /* YHConcurrentManager.m */,
+				44322FE01AFCCB1E00CD33CF /* Read_me_Gcd_Semaphore */,
+			);
+			path = Semaphore;
+			sourceTree = "<group>";
+		};
 		443358511A661A99007B7128 /* GCDDemo */ = {
 			isa = PBXGroup;
 			children = (
+				44322FD91AFCC57000CD33CF /* Semaphore */,
 			);
 			path = GCDDemo;
 			sourceTree = "<group>";
@@ -746,6 +767,7 @@
 				444E700E1A1F2C2A00EA47A4 /* Read_me_RunTimeDemo2 in Resources */,
 				448AAEE11A1B3429006EBFDA /* Read_me_RunTimeDemo1 in Resources */,
 				44753DFB19F5390A00BB35BF /* Read_me_RunloopDemo1 in Resources */,
+				44322FE11AFCCB1F00CD33CF /* Read_me_Gcd_Semaphore in Resources */,
 				44C97FBB19F63478004C440B /* Read_me_RunloopDemo2 in Resources */,
 				44600F421AC16AF400067EEE /* Read_me_CoreAnimationDemo in Resources */,
 				44C97FC319F66FF5004C440B /* Read_me_RunloopDemo3 in Resources */,
@@ -754,9 +776,9 @@
 				445D7C9F1AD3EDA100C2D7BB /* Read_me_Instrument_Demo_2 in Resources */,
 				44753DF319F5314400BB35BF /* Read me in Resources */,
 				4409E9E219EE40DB00D06415 /* LaunchScreen.xib in Resources */,
+				44DA649E1ADCAEE6001C22BE /* Read_me_Block_Demo_2 in Resources */,
 				440265BD1AB19C4100324AE6 /* Read_me_CircleProgressDemo1 in Resources */,
 				4409E9DF19EE40DB00D06415 /* Images.xcassets in Resources */,
-				4420D5821AD6607200F6C20D /* Read_me_Block_Demo_2 in Resources */,
 				443D5EE81AB292DC00445DDD /* Read_me_ChartViewDemo in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -776,12 +798,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4409EA0319EE43E500D06415 /* YHPanTransitionViewController.m in Sources */,
+				44322FDF1AFCC61200CD33CF /* YHConcurrentManager.m in Sources */,
 				446417DF19F8DB0400CAE6EA /* YHRunloopDemo4ViewController.m in Sources */,
 				44C6F75F19EFE3E00018D91C /* YHRightViewController.m in Sources */,
 				440265BA1AB19B2000324AE6 /* YHCircleProgressDemo1ViewController.m in Sources */,
 				444CFDF81A6648B3009D5839 /* YHExpandCell.m in Sources */,
 				44C6F75E19EFE3E00018D91C /* YHLeftViewController.m in Sources */,
-				4420D5861AD6608C00F6C20D /* YHBlockDemo2ViewController.m in Sources */,
 				44753DF019F5302D00BB35BF /* YHReadMeViewController.m in Sources */,
 				4409EA2719EE676E00D06415 /* YHPopWithPanNavigationController.m in Sources */,
 				44C6F75119EFD9950018D91C /* YHRunloopDemo1ViewController.m in Sources */,
@@ -789,10 +811,12 @@
 				44C97FB819F62FA7004C440B /* YHRunloopDemo2ViewController.m in Sources */,
 				4409E9D719EE40DB00D06415 /* AppDelegate.m in Sources */,
 				440E31331AC564B900BAF826 /* YHReflectionView.m in Sources */,
+				44322FDC1AFCC59E00CD33CF /* YHSemaphoreViewController.m in Sources */,
 				440E31301AC5141700BAF826 /* UIColor+Categary.m in Sources */,
 				44E0EACA1AD37B0B007529B9 /* YHPerformanceDemo1ViewController.m in Sources */,
 				443D5EFA1AB2DB5C00445DDD /* YHCircleChartView.m in Sources */,
 				443D5EEC1AB2930200445DDD /* YHChartDemoViewController.m in Sources */,
+				44DA649C1ADCAEB3001C22BE /* YHBlockDemo2ViewController.m in Sources */,
 				440C456B19F12BFB005B9B55 /* YHPanPopViewController.m in Sources */,
 				4409E9FF19EE427900D06415 /* YHBaseViewController.m in Sources */,
 				44600F3F1AC16ADA00067EEE /* YHCoreAnimationViewController.m in Sources */,
@@ -946,7 +970,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b6dfa65a-7204-47d5-a354-df849aa9ea38";
+				PROVISIONING_PROFILE = "242e0a80-2ff2-459e-aa0c-f8c8dd6a4f6b";
 				SWIFT_OBJC_BRIDGING_HEADER = "YHDemo/Class/Demo/RunTimeDemo/Demo1/YHDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -962,7 +986,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b6dfa65a-7204-47d5-a354-df849aa9ea38";
+				PROVISIONING_PROFILE = "242e0a80-2ff2-459e-aa0c-f8c8dd6a4f6b";
 				SWIFT_OBJC_BRIDGING_HEADER = "YHDemo/Class/Demo/RunTimeDemo/Demo1/YHDemo-Bridging-Header.h";
 			};
 			name = Release;
